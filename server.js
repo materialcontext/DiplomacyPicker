@@ -128,7 +128,6 @@ const gearTable = {
 
 function getBonus() {
     let roll = rollDice(3, 6, true);
-    console.log(roll)
     let bonus = lookUpBonus(roll);
   return bonus;
 }
@@ -136,23 +135,23 @@ function getBonus() {
 function lookUpBonus(roll) {
   if (roll > 12) {
     if (roll > 16) {
-      return 3;
+      return "+3";
     }
     if (roll > 14) {
-      return 2;
+      return "+2";
     }
-    return 1;
+    return "+1";
   }
   if (roll < 9) {
     if (roll > 6) {
-      return -1;
+      return "-1";
     }
     if (roll > 4) {
-      return -2;
+      return "-2";
     }
-    return -3;
+    return "-3";
   }
-  return 0;
+  return "±0";
   }
 
 function getDebt() {
@@ -343,15 +342,15 @@ function generateCharacter() {
 }
 
 const path = require('path');
-app.use(express.static(path.resolve(__dirname, "./client/build")));
+app.use(express.static(path.resolve(__dirname, "./client/public/")));
 
 app.get('/api/create', (req, res) => { 
   res.json(generateCharacter());
 })
 
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
+app.get('/', (req, res) => {
+  res.sendFile("index.html");
+})
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
